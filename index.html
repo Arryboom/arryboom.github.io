@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<style>
+	.test-textarea {
+width: 400px;
+min-height: 26px;
+line-height: 20px;
+_height: 30px;
+margin-left: auto;
+margin-right: auto;
+padding: 3px;
+outline: 0;
+border: 1px solid #ccc;
+font-size: 12px;
+word-wrap: break-word;
+overflow-x: hidden;
+overflow-y: auto;
+-webkit-user-modify: read-write-plaintext-only;
+border-radius: 4px;
+}
+
+.input-group-text,
+.btn-success,.btn-primary {
+  flex: 1 0 auto;
+  margin: 2px;
+}
+.d-flex {
+  margin-left: 3px;
+  margin-top: 1px;
+}</style>
+<link href="./js/bootoast.css" rel="stylesheet">
+<link href="./js/bootstrap.min.css" rel="stylesheet">
+	<script src="./js/jquery.min.js.download"></script>
+		<script type="text/javascript" src="./js/core-min.js.download"></script>
+		<script type="text/javascript" src="./js/enc-base64-min.js.download"></script>
+		<script type="text/javascript" src="./js/bootstrap.min.js.download"></script>
+		<script type="text/javascript" src="./js/bootoast.js.download"></script>
+	</head>
+<body>
+	<script>
+		var Table = {
+			'乾': 'A',
+			'坤': 'B',
+			'屯': 'C',
+			'蒙': 'D',
+			'需': 'E',
+			'讼': 'F',
+			'师': 'G',
+			'比': 'H',
+			'小畜': 'I',
+			'履': 'J',
+			'泰': 'K',
+			'否': 'L',
+			'同人': 'M',
+			'大有': 'N',
+			'谦': 'O',
+			'豫': 'P',
+			'随': 'Q',
+			'蛊': 'R',
+			'临': 'S',
+			'观': 'T',
+			'噬嗑': 'U',
+			'贲': 'V',
+			'剥': 'W',
+			'复': 'X',
+			'无妄': 'Y',
+			'大畜': 'Z',
+			'颐': 'a',
+			'大过': 'b',
+			'坎': 'c',
+			'离': 'd',
+			'咸': 'e',
+			'恒': 'f',
+			'遁': 'g',
+			'大壮': 'h',
+			'晋': 'i',
+			'明夷': 'j',
+			'家人': 'k',
+			'睽': 'l',
+			'蹇': 'm',
+			'解': 'n',
+			'损': 'o',
+			'益': 'p',
+			'夬': 'q',
+			'姤': 'r',
+			'萃': 's',
+			'升': 't',
+			'困': 'u',
+			'井': 'v',
+			'革': 'w',
+			'鼎': 'x',
+			'震': 'y',
+			'艮': 'z',
+			'渐': '1',
+			'归妹': '2',
+			'丰': '3',
+			'旅': '4',
+			'巽': '5',
+			'兑': '6',
+			'涣': '7',
+			'节': '8',
+			'中孚': '9',
+			'小过': '0',
+			'既济': '+',
+			'未济': '/'
+
+		};
+
+		function Decode() {
+			$("#respon").val("")
+			var str = $("#tgt_text").val();
+			var ta = "";
+			for(var i = 0; i < str.length; i++) {
+				$.each(Table, function(n, value) { 
+					str = str.replace(n, value); 
+				});
+			}
+			try{
+			var words  = CryptoJS.enc.Base64.parse(str);
+			var sda=words.toString(CryptoJS.enc.Utf8);
+			}catch (Error){
+			errortip();
+			return;
+			}
+			$("#respon").val(sda.replace(/<\/?[^>]*>/gim, ""));
+		}
+
+		function Encode() {
+			var str = $("#tgt_text").val();
+			if (str==""){
+			return;
+			}
+			var ta = "";
+			str = base64_encode();
+			for(var i = 0; i < str.length; i++) {
+				for(var key in Table) {
+					if(Table[key] == str[i]) {
+						ta += key
+					}
+				}
+			}
+
+			$("#respon").val(ta)
+		}
+
+function base64_encode(){
+	var str=CryptoJS.enc.Utf8.parse($("#tgt_text").val());
+	var base64=CryptoJS.enc.Base64.stringify(str);
+	return base64;
+}
+function base64_decode(){
+
+}
+function errortip(){
+			  bootoast({
+			    message: 'Cannot decode this text.',
+				 type: 'danger',
+				 position:'right-bottom',
+				 timeout:5
+			  });
+		}
+	</script>
+<div class="container-fluid"><nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="https://arryboom.github.io/">
+    <img src="./js/favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
+    HERE WE GO
+  </a>
+</nav><br><br></div>
+	<div class="container-fluid">
+	<div class="container">
+
+<div class="container">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Put the text you want to process here</span>
+  </div>
+  <div class="d-flex">
+    <textarea id="tgt_text" class="form-control" aria-label="With textarea" rows="6"></textarea>
+    <div class="d-flex flex-column" id="button-addon4">
+      <button class="btn btn-success" type="button" onclick="Encode()">Encode</button>
+      <button class="btn btn-primary" type="button" onclick="Decode()">Decode</button>
+    </div>
+  </div>
+  <br>
+    <div class="input-group-prepend">
+    <span class="input-group-text">Result</span>
+  </div>
+  <div class="d-flex">
+    <textarea id="respon" class="form-control" aria-label="With textarea" rows="20" readonly=""></textarea>
+    </div>
+  </div>
+</div>
+	</div>
+	</body></html>
